@@ -255,16 +255,17 @@ class AudioPackage {
   /**
    * 根据文件名，添加一个新音频
    * @param {string} fileName 文件名，自动忽略扩展名
-   * @param {WaveFile} waveFile WaveFile对象
+   * @param {Buffer} wave 波形文件 Buffer 对象
    * @returns {AudioIDXItem} 新增的 AudioIDXItem
    */
-  addItemFromWav(fileName, waveFile) {
+  addItemFromWav(fileName, wave) {
     const nameStr = path
       .basename(fileName, path.extname(fileName))
       .substring(0, 15)
     const buff = Buffer.alloc(16)
     buff.write(nameStr)
     const name = buff.buffer
+    const waveFile = new WaveFile(wave)
 
     const samples = waveFile.getSamples(false, Uint8Array)
     const size = samples.byteLength
@@ -360,8 +361,7 @@ module.exports = AudioPackage
 // const audioReader = new AudioPackage(idxFile, bagFile)
 
 // const input = fs.readFileSync('./test/src.wav')
-// const inputWav = new WaveFile(input)
-// audioReader.addItemFromWav('src.wav', inputWav)
+// audioReader.addItemFromWav('src.wav', input)
 
 // fs.writeFileSync(`./test/audioEdited.bag`, audioReader.getBagFile())
 // fs.writeFileSync(`./test/audioEdited.idx`, audioReader.getIdxFile())
