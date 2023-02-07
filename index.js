@@ -80,7 +80,7 @@ class AudioExactType {
   }
   /** WaveFile对象 */
   get wav() {
-    return this._wav
+    return this._wav.toBuffer()
   }
 }
 
