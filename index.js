@@ -298,7 +298,7 @@ class AudioPackage {
       this._fileCount++
       return audioItem
     } else {
-      audioItem.name = Buffer.from(this._audioIDXItems[id].nameBuffer).buffer
+      audioItem._name = Buffer.from(this._audioIDXItems[id].nameBuffer).buffer
       this._audioIDXItems[id] = audioItem
       return audioItem
     }
