@@ -268,7 +268,7 @@ class AudioPackage {
     const waveFile = new WaveFile(wave)
 
     const samples = waveFile.getSamples(false, Uint8Array)
-    const size = samples.length
+    const size = Math.ceil(samples.length / 4) * 4
     const sampleRate = waveFile.fmt.sampleRate
     const format = waveFile.fmt.audioFormat // 0x0001 for 16bit PCM, 0x0011 for 4bit IMA ADPCM
     const channels = waveFile.fmt.numChannels
@@ -340,8 +340,8 @@ class AudioPackage {
       const itemDataView = new DataView(buff, 0x0c + index * 0x24)
       const item = this.audioIDXItems[index]
       const nameUint8Buff = new Uint8Array(item.nameBuffer)
-      nameUint8Buff.forEach((value, index) => {
-        itemDataView.setUint8(index, value)
+      nameUint8Buff.forEach((val, idx) => {
+        itemDataView.setUint8(idx, val)
       })
       itemDataView.setUint32(0x10, offset, true)
       itemDataView.setUint32(0x14, item.size, true)
