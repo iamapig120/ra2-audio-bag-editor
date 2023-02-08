@@ -268,7 +268,7 @@ class AudioPackage {
     const waveFile = new WaveFile(wave)
 
     const samples = waveFile.getSamples(false, Uint8Array)
-    const size = samples.byteLength
+    const size = 256 * Math.ceil(samples.byteLength / 256)
     const sampleRate = waveFile.fmt.sampleRate
     const format = waveFile.fmt.audioFormat // 0x0001 for 16bit PCM, 0x0011 for 4bit IMA ADPCM
     const channels = waveFile.fmt.numChannels
@@ -317,7 +317,7 @@ class AudioPackage {
       const samples = Buffer.from(
         new Uint8Array(this.audioIDXItems[index].samples)
       )
-      samples.copy(buff, offset, 0, this.audioIDXItems[index].size)
+      samples.copy(buff, offset, 0, samples.byteLength)
       offset += this.audioIDXItems[index].size
     }
     return buff
