@@ -268,7 +268,7 @@ class AudioPackage {
     const waveFile = new WaveFile(wave)
 
     const samples = waveFile.getSamples(false, Uint8Array)
-    const size = Math.ceil(size / 0xff) * 0xff
+    const size = Math.ceil(samples.byteLength / 0xff) * 0xff
     const sampleRate = waveFile.fmt.sampleRate
     const format = waveFile.fmt.audioFormat // 0x0001 for 16bit PCM, 0x0011 for 4bit IMA ADPCM
     const channels = waveFile.fmt.numChannels
